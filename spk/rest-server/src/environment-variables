@@ -1,0 +1,4 @@
+# Define custom parameters for rest-server configuration
+#
+# Custom command line options (note that "export" is not needed here):
+#REST_SERVER_EXTRA_ARGS="--tls --tls-key /path/to/key.pem --tls-cert /path/to/cert.pem"
