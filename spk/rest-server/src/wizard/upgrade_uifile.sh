@@ -13,8 +13,7 @@ if [ -r "${INST_VARIABLES}" ]; then
     done
 fi
 
-# TODO: actually substitute the previous values as defaults
-cat <<'EOF' > $SYNOPKG_TEMP_LOGFILE
+cat <<EOF > $SYNOPKG_TEMP_LOGFILE
 [
    {
       "step_title": "Rest Server data folder location",
@@ -28,6 +27,7 @@ cat <<'EOF' > $SYNOPKG_TEMP_LOGFILE
                   "key": "wizard_data_volume",
                   "desc": "Volume name",
                   "displayField": "display_name",
+                  "defaultValue": "${WIZARD_DATA_VOLUME}",
                   "valueField": "volume_path",
                   "editable": false,
                   "mode": "remote",
@@ -60,11 +60,11 @@ cat <<'EOF' > $SYNOPKG_TEMP_LOGFILE
                {
                   "key": "wizard_data_directory",
                   "desc": "Data shared folder",
-                  "defaultValue": "restic",
+                  "defaultValue": "${WIZARD_DATA_DIRECTORY}",
                   "validator": {
                      "allowBlank": false,
                      "regex": {
-                        "expr": "/^[\\w _-]+$/",
+                        "expr": "/^[\\\\w _-]+\$/",
                         "errorText": "Subdirectories are not supported."
                      }
                   }
@@ -72,7 +72,7 @@ cat <<'EOF' > $SYNOPKG_TEMP_LOGFILE
             ]
          },
          {
-            "desc": "The folder will be created on demand as regular DSM shared folder for the service user <b>sc-rest-server</b>. For details about the DSM permissions see <a target=\"_blank\" href=\"https://github.com/SynoCommunity/spksrc/wiki/Permission-Management\">Permission Management</a>.<p/>"
+            "desc": "The folder will be created on demand as regular DSM shared folder for the service user <b>sc-rest-server</b>. For details about the DSM permissions see <a target=\\"_blank\\" href=\\"https://github.com/SynoCommunity/spksrc/wiki/Permission-Management\\">Permission Management</a>.<p/>"
          }
       ]
    },
@@ -87,10 +87,11 @@ cat <<'EOF' > $SYNOPKG_TEMP_LOGFILE
                {
                   "key": "wizard_listen_address",
                   "desc": "IP address",
+                  "defaultValue": "${WIZARD_LISTEN_ADDRESS}",
                   "validator": {
                      "allowBlank": true,
                      "regex": {
-                        "expr": "/^(([1-9]?\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.){3}([1-9]?\\d|1\\d\\d|2[0-4]\\d|25[0-5])$/",
+                        "expr": "/^(([1-9]?\\\\d|1\\\\d\\\\d|2[0-4]\\\\d|25[0-5])\\\\.){3}([1-9]?\\\\d|1\\\\d\\\\d|2[0-4]\\\\d|25[0-5])\$/",
                         "errorText": "Only IPv4 numeric addresses (e.g., 192.168.1.2) are supported"
                      }
                   }
@@ -98,11 +99,11 @@ cat <<'EOF' > $SYNOPKG_TEMP_LOGFILE
                {
                   "key": "wizard_listen_port",
                   "desc": "Port",
-                  "defaultValue": "8960",
+                  "defaultValue": "${WIZARD_LISTEN_PORT}",
                   "validator": {
                      "allowBlank": false,
                      "regex": {
-                        "expr": "/^[1-9][0-9]{2,4}$/",
+                        "expr": "/^[1-9][0-9]{2,4}\$/",
                         "errorText": "Port must be in range 100-65535"
                      }
                   }
@@ -124,23 +125,28 @@ cat <<'EOF' > $SYNOPKG_TEMP_LOGFILE
             "subitems": [
                {
                   "key": "wizard_append_only",
-                  "desc": "Enable append only mode"
+                  "desc": "Enable append only mode",
+                  "defaultValue": "${WIZARD_APPEND_ONLY}"
                },
                {
                   "key": "wizard_no_auth",
-                  "desc": "Disable .htpasswd authentication"
+                  "desc": "Disable .htpasswd authentication",
+                  "defaultValue": "${WIZARD_NO_AUTH}"
                },
                {
                   "key": "wizard_private_repos",
-                  "desc": "Users can only access their private repo"
+                  "desc": "Users can only access their private repo",
+                  "defaultValue": "${WIZARD_PRIVATE_REPOS}"
                },
                {
                   "key": "wizard_prometheus",
-                  "desc": "Enable Prometheus metrics"
+                  "desc": "Enable Prometheus metrics",
+                  "defaultValue": "${WIZARD_PROMETHEUS}"
                },
                {
                   "key": "wizard_prometheus_no_auth",
-                  "desc": "Disable authentication for Prometheus metrics"
+                  "desc": "Disable authentication for Prometheus metrics",
+                  "defaultValue": "${WIZARD_PROMETHEUS_NO_AUTH}"
                }
             ]
          }
